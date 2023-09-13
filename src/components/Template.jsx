@@ -97,8 +97,8 @@ export default function Template({children, title = "Dashboard"}) {
       const data = snapshot.val();
       let dataPatien = [];
       if (data.user !== null) {
-        Object.values(data.user).map((user, index) => {
-          dataPatien.push({ id: index+1, ...user})
+        Object.values(data.user).map((user ) => {
+          dataPatien.push( user)
          });
         }
         authContext.setDataState(dataPatien);

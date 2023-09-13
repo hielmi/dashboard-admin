@@ -1,58 +1,62 @@
-/* eslint-disable react/prop-types */
+import MUIDataTable from "mui-datatables";
 import { useState } from "react";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import Title from "./Title";
-import Grid from "@mui/material/Unstable_Grid2";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Grid } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 
-function preventDefault(event) {
-  event.preventDefault();
-}
-const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "nama", headerName: "Nama", width: 200 },
-  { field: "tanggal", headerName: "Tanggal", width: 550 },
-];
+
+const columns = ["nama", "tanggal"];
 
 // eslint-disable-next-line react/prop-types
-export default function Orders({ data }) {
-  const [checked, setChecked] = useState(true);
+export default function Orders({ data, handleDelete, handleUpdate }) {
+  const [isEdit, setIsEdit] = useState(false);
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  }; 
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid xs={8}>
-          <Title>Pasien</Title>
-        </Grid>
-        <Grid xs={4}>
-          <FormControlLabel
-            control={
-              <Switch
-              checked={checked}
-              onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            }
-            label="Mode Edit"
-          />
-        </Grid>
-      </Grid>
-      <DataGrid
-        rows={data}
+      <MUIDataTable
+        title={"Pasien"}
+        data={data}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+        options={{
+          filterType: "checkbox",
+          selectableRowsOnClick: true,
+          viewColumns: false,
+          responsive: "standard",
+          onRowSelectionChange: (currentRowsSelected, allRowsSelected) => {
+            console.log("Baris yang dipilih:", allRowsSelected.length);
+            if (allRowsSelected.length <= 1) {
+              setIsEdit(true);
+            } else {
+              setIsEdit(false);
+            }
+          },
+          customToolbarSelect: (selectedRows, displayData, setSelectedRows) => {
+            return (
+              <Grid
+                container
+                spacing={2}
+                justifyContent={"flex-end"}
+                sx={{ mr: 2 }}
+              >
+                <Grid item display={isEdit === true ? "flex" : "none"}>
+                  <IconButton
+                    onClick={() => handleUpdate(selectedRows)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    onClick={() => {handleDelete(selectedRows);}}
+                  >
+                    <DeleteIcon color="error" />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            );
           },
         }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection={checked}
-        rowSelection={checked}
-        slots={{ toolbar: GridToolbar }}
       />
     </>
   );

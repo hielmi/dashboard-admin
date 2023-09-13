@@ -7,12 +7,12 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Deposits() {
+export default function Deposits({jumlah}) {
   return (
     <React.Fragment>
       <Title>Jumlah Pasien</Title>
       <Typography component="p" variant="h4">
-        $3,024.00
+        {jumlah}
       </Typography>
     </React.Fragment>
   );
