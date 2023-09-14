@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -35,32 +33,34 @@ export default function SignIn() {
       const email = data.get("email");
       const password = data.get("password");
 
+      // proses login
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
 
-      // Access user information from the 'user' property of 'userCredential'
+      // Mengambil informasi dari user
       const user = userCredential.user;
       const userUid = user.uid; // User's unique ID
       const userEmail = user.email; // User's email address
 
+      // menyimpan data ke state
       setAuthState({ userUid, userEmail, authenticated: true });
     } catch (error) {
       setAuthState({ authenticated: false });
       setOpen(true);
-      console.log(error.code);
-      if (error.code === "auth/invalid-login-credentials" ) {
+      if (error.code === "auth/invalid-login-credentials") {
         setMessage("Password salah!");
-      } else if (error.code ===  "auth/too-many-requests") {
+      } else if (error.code === "auth/too-many-requests") {
         setMessage("Terlalu banyak percobaan");
-      }else {
+      } else {
         setMessage("User Tidak Ditemukan");
       }
     }
   };
 
+  // mengecek apakah sudah terautentikasi
   if (authState.authenticated) {
     return <Navigate to="/dashboard" />;
   }

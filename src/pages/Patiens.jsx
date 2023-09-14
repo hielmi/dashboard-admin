@@ -30,6 +30,7 @@ export default function Patiens() {
   const [newTanggal, setNewTanggal] = useState(dayjs(Date()));
   const { dataState} = useContext(AuthContext);
 
+  // handle open modal delet
   const handleClickOpenDelete = ({ data }) => {
     setOpenConfDelete(true);
     const itemDeleted = [];
@@ -39,11 +40,13 @@ export default function Patiens() {
     setSelectedRows(itemDeleted);
   };
 
+  // close modal delete
   const handleCloseDelete = () => {
     setOpenConfDelete(false);
     setSelectedRows([]);
   };
 
+  // handle modal open edit
   const handleClickOpenUpdate = ({ data }) => {
     setOpenConfUpdate(true);
     const selected = dataState[data[0].dataIndex];
@@ -52,6 +55,7 @@ export default function Patiens() {
     setNewTanggal(selected.tanggal);
   };
 
+  // close modal edit
   const handleCloseUpdate = () => {
     setOpenConfUpdate(false);
     setNewNama("");
@@ -59,6 +63,7 @@ export default function Patiens() {
     setDataEdit("");
   };
 
+  // handle update
   const handleSubmitChange = () => {
     const formattedDate = newTanggal
       ? dayjs(newTanggal).locale("id").format("DD MMMM YYYY")
@@ -73,7 +78,7 @@ export default function Patiens() {
     setOpenConfUpdate(false);
   };
 
-  //   delete
+//  handle delete
   const handleDelete = () => {
     selectedRows.map((item) => {
       remove(ref(db, `/user/${item.nama}`));

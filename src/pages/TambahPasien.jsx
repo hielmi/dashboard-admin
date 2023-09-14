@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
@@ -11,8 +11,9 @@ import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { db } from "../firebase/firebase";
-import { set, ref} from "firebase/database";
+import { set, ref } from "firebase/database";
 
+// komponen alert
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -23,28 +24,33 @@ export default function TambahPasien() {
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = useState("error");
 
+  // close snackbar
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
+  // menyimpan nama ke state
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
 
+  // mengambil data tanggal yang dipilih dan menyimpan ke state.
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  //write
+  // create ke database
   const writeToDatabase = () => {
     try {
+      // melakukan format tanggal
       const formattedDate = selectedDate
         ? dayjs(selectedDate).locale("id").format("DD MMMM YYYY")
         : "";
+
+      // create data ke firebase
       set(ref(db, `/user/${name}`), {
         nama: name,
         tanggal: formattedDate,
@@ -94,7 +100,9 @@ export default function TambahPasien() {
               severity={severity}
               sx={{ width: "100%" }}
             >
-             { severity === "success" ? "Berhasil Menambahkan Data!" : "Gagal Menambahkan Data!"}
+              {severity === "success"
+                ? "Berhasil Menambahkan Data!"
+                : "Gagal Menambahkan Data!"}
             </Alert>
           </Snackbar>
         </Stack>

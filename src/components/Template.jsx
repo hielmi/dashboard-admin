@@ -111,9 +111,9 @@ export default function Template({children, title = "Dashboard"}) {
     setOpen(!open);
   };
 
-  if (!authState.authenticated) {
-    return <Navigate to="/signin" />;
-  }
+  // if (!authState.authenticated) {
+  //   return <Navigate to="/signin" />;
+  // }
 
 
   return (

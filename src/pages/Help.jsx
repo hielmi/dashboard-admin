@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
 import Template from "../components/Template";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
