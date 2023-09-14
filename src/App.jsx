@@ -16,7 +16,7 @@ function App() {
   const navigate = useNavigate(); // Initialize navigate function
 
   useEffect(() => {
-    // mengecek apakah 
+    // mengecek apakah
     if (!authContext.authState.authenticated) {
       // If not authenticated, navigate to SignIn
       navigate("/signin");
