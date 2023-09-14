@@ -1,15 +1,9 @@
-import * as React from "react";
-import { useEffect, useContext, useState } from "react";
+import {useContext } from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Chart from "../components/Chart";
 import Deposits from "../components/Deposits";
-import Orders from "../components/Orders";
 import Template from "../components/Template";
-import { db } from "../firebase/firebase";
-import { ref, onValue } from "firebase/database";
 import { AuthContext } from "../context/AuthContext";
-import CircularProgress from "@mui/material/CircularProgress";
 import { DataGrid } from "@mui/x-data-grid";
 import Title from "../components/Title";
 
@@ -20,12 +14,15 @@ const columns = [
 ];
 
 export default function Dashboard() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const { dataState, setDataState } = useContext(AuthContext);
+  const { dataState} = useContext(AuthContext);
 
   const lastData = dataState.slice((dataState.length - 1) - 5 + 1, (dataState.length - 1) + 1);
   const data = []
-  lastData.map((item, index) => data.push({...item, id: index+1}))
+  if (dataState.length > 5){
+    lastData.map((item, index) => data.push({...item, id: index+1}))
+  } else{
+    dataState.map((item, index) => data.push({...item, id: index+1}))
+  }
 
   return (
     <Template title="Dashboard">

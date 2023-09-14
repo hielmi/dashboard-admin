@@ -19,6 +19,7 @@ import ListItems from "../components/listItems";
 import { db } from "../firebase/firebase";
 import { ref, onValue } from "firebase/database";
 import { AuthContext } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -90,7 +91,7 @@ const defaultTheme = createTheme();
 // eslint-disable-next-line react/prop-types
 export default function Template({children, title = "Dashboard"}) {
   const [open, setOpen] = React.useState(true);
-  const authContext = useContext(AuthContext);
+  const {authState, setDataState} = useContext(AuthContext);
 
   useEffect(() => {
     onValue(ref(db), (snapshot) => {
@@ -101,7 +102,7 @@ export default function Template({children, title = "Dashboard"}) {
           dataPatien.push( user)
          });
         }
-        authContext.setDataState(dataPatien);
+       setDataState(dataPatien);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -109,6 +110,11 @@ export default function Template({children, title = "Dashboard"}) {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  if (!authState.authenticated) {
+    return <Navigate to="/signin" />;
+  }
+
 
   return (
     <ThemeProvider theme={defaultTheme}>

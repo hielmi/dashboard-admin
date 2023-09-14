@@ -4,7 +4,7 @@ const { Provider } = AuthContext;
 
 
 const INITIAL_AUTHSTATE = {
-    authenticated: true,
+    authenticated: false,
 }
 
 // eslint-disable-next-line react/prop-types

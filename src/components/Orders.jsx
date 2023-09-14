@@ -24,7 +24,6 @@ export default function Orders({ data, handleDelete, handleUpdate }) {
           viewColumns: false,
           responsive: "standard",
           onRowSelectionChange: (currentRowsSelected, allRowsSelected) => {
-            console.log("Baris yang dipilih:", allRowsSelected.length);
             if (allRowsSelected.length <= 1) {
               setIsEdit(true);
             } else {

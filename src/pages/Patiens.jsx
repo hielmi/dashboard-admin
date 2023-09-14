@@ -28,7 +28,7 @@ export default function Patiens() {
   const [dataEdit, setDataEdit] = useState([]);
   const [newNama, setNewNama] = useState("");
   const [newTanggal, setNewTanggal] = useState(dayjs(Date()));
-  const { dataState, setDataState } = useContext(AuthContext);
+  const { dataState} = useContext(AuthContext);
 
   const handleClickOpenDelete = ({ data }) => {
     setOpenConfDelete(true);
@@ -80,6 +80,7 @@ export default function Patiens() {
     })
     setOpenConfDelete(false);
   };
+
 
   return (
     <Template title="Informasi Pasien">

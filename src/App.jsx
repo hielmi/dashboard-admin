@@ -1,44 +1,31 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Dashboard from "./pages/Dashboard";
 import Patiens from "./pages/Patiens";
 import SignIn from "./pages/SignIn";
 import Help from './pages/Help';
 import TambahPasien from './pages/TambahPasien';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; // Import necessary components
 import { AuthContext } from './context/AuthContext';
 
-const router = createBrowserRouter([
-  {
-    path: "/dashboard",
-    element: <Dashboard />,
-  },
-  {
-    path: "/pasien",
-    element: <Patiens />,
-  },
-  {
-    path: "/tambah_pasien",
-    element: <TambahPasien />,
-  },
-  {
-    path: "/help",
-    element: <Help />,
-  },
-  {
-    path: "/signin",
-    element: <SignIn />,
-  },
-]);
-
 function App() {
-  const authContext = useContext(AuthContext)
+  const authContext = useContext(AuthContext);
 
+  useEffect(() => {
+    // Perform any authentication checks or actions here
+  }, [authContext]);
 
-  if (authContext?.authState?.authenticated === true) {
-    return  <RouterProvider router={router} />
-  } else{
-    return <SignIn />
-  }
+  return (
+    <Router>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/pasien" element={<Patiens />} />
+        <Route path="/tambah_pasien" element={<TambahPasien />} />
+        <Route path="/help" element={<Help />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/*" element={<><h1>Halaman tidak ditemukan</h1></>} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

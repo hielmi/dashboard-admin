@@ -10,6 +10,9 @@ import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 import { Link, useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import {  } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -20,6 +23,8 @@ const theme = createTheme({
 export default function ListItems() {
   const location = useLocation();
   const [active, setActive] = useState(0);
+  const { authState, setAuthState } = React.useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Determine the active item based on the current location
@@ -32,7 +37,15 @@ export default function ListItems() {
     } else {
       setActive(0);
     }
-  }, [location.pathname]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname, AuthContext]);
+
+  const handleLogout = () => {
+    setAuthState({
+      authenticated: false,
+    });
+    navigate('/signin');
+  };
 
   return (
     <React.Fragment>
@@ -82,11 +95,13 @@ export default function ListItems() {
           <ListItemText primary="Help" />
         </ListItemButton>
         <ListItemButton
-          sx={{
-            backgroundColor: active === 4 ? "#9e9e9e" : "transparent",
-          }}
           selected={active === 4}
-          onClick={() => setActive(4)}
+          onClick={handleLogout}
+          sx={{
+            "&:hover": {
+              backgroundColor: "#ff2a12", // Define your hover color here
+            },
+          }}
         >
           <ListItemIcon>
             <LogoutIcon />

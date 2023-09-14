@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
@@ -10,9 +10,8 @@ import Template from "../components/Template";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-
 import { db } from "../firebase/firebase";
-import { set, ref, onValue, remove, update } from "firebase/database";
+import { set, ref} from "firebase/database";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -58,7 +57,6 @@ export default function TambahPasien() {
       console.log(err);
     }
   };
-
   return (
     <Template title="Pasien">
       <Box width={"100%"} sx={{ mb: 1 }}>
