@@ -111,11 +111,6 @@ export default function Template({children, title = "Dashboard"}) {
     setOpen(!open);
   };
 
-  // if (!authState.authenticated) {
-  //   return <Navigate to="/signin" />;
-  // }
-
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
